@@ -1,19 +1,17 @@
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
-// Bogie class (Custom Object)
+// Bogie class
 class Bogie {
     String name;
     int capacity;
 
-    // Constructor
     Bogie(String name, int capacity) {
         this.name = name;
         this.capacity = capacity;
     }
 
-    // Display method
     void display() {
         System.out.println(name + " → Capacity: " + capacity);
     }
@@ -23,21 +21,28 @@ public class TrainConsistManagementApp {
 
     public static void main(String[] args) {
 
-        System.out.println("=== Train Consist Management App (UC7) ===");
+        System.out.println("=== Train Consist Management App (UC8) ===");
 
-        // Step 1: Create List of Bogie objects
+        // Step 1: Create list (same as UC7)
         List<Bogie> bogieList = new ArrayList<>();
-
-        // Step 2: Add passenger bogies
         bogieList.add(new Bogie("Sleeper", 72));
         bogieList.add(new Bogie("AC Chair", 54));
         bogieList.add(new Bogie("First Class", 24));
+        bogieList.add(new Bogie("Luxury", 80)); // extra for testing
 
-        // Step 3: Sort bogies by capacity (ascending)
-        bogieList.sort(Comparator.comparingInt(b -> b.capacity));
+        // Step 2: Filter bogies with capacity > 60
+        List<Bogie> filteredList = bogieList.stream()
+                .filter(b -> b.capacity > 60)
+                .collect(Collectors.toList());
 
-        // Step 4: Display sorted bogies
-        System.out.println("\n=== Bogies Sorted by Capacity (Ascending) ===");
+        // Step 3: Display filtered bogies
+        System.out.println("\n=== Bogies with Capacity > 60 ===");
+        for (Bogie b : filteredList) {
+            b.display();
+        }
+
+        // Step 4: Show original list is unchanged
+        System.out.println("\n=== Original Bogie List (Unchanged) ===");
         for (Bogie b : bogieList) {
             b.display();
         }
