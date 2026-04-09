@@ -1,15 +1,16 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 
-// Bogie class
+// Bogie class with category
 class Bogie {
     String name;
     int capacity;
+    String type; // Passenger or Goods
 
-    Bogie(String name, int capacity) {
+    Bogie(String name, int capacity, String type) {
         this.name = name;
         this.capacity = capacity;
+        this.type = type;
     }
 
     void display() {
@@ -21,30 +22,29 @@ public class TrainConsistManagementApp {
 
     public static void main(String[] args) {
 
-        System.out.println("=== Train Consist Management App (UC8) ===");
+        System.out.println("=== Train Consist Management App (UC9) ===");
 
-        // Step 1: Create list (same as UC7)
+        // Step 1: Create list of bogies
         List<Bogie> bogieList = new ArrayList<>();
-        bogieList.add(new Bogie("Sleeper", 72));
-        bogieList.add(new Bogie("AC Chair", 54));
-        bogieList.add(new Bogie("First Class", 24));
-        bogieList.add(new Bogie("Luxury", 80)); // extra for testing
+        bogieList.add(new Bogie("Sleeper", 72, "Passenger"));
+        bogieList.add(new Bogie("AC Chair", 54, "Passenger"));
+        bogieList.add(new Bogie("First Class", 24, "Passenger"));
+        bogieList.add(new Bogie("Cargo", 100, "Goods"));
+        bogieList.add(new Bogie("Oil Tanker", 120, "Goods"));
 
-        // Step 2: Filter bogies with capacity > 60
-        List<Bogie> filteredList = bogieList.stream()
-                .filter(b -> b.capacity > 60)
-                .collect(Collectors.toList());
+        // Step 2: Group bogies by type
+        Map<String, List<Bogie>> groupedBogies = bogieList.stream()
+                .collect(Collectors.groupingBy(b -> b.type));
 
-        // Step 3: Display filtered bogies
-        System.out.println("\n=== Bogies with Capacity > 60 ===");
-        for (Bogie b : filteredList) {
-            b.display();
-        }
+        // Step 3: Display grouped result
+        System.out.println("\n=== Grouped Bogies by Type ===");
 
-        // Step 4: Show original list is unchanged
-        System.out.println("\n=== Original Bogie List (Unchanged) ===");
-        for (Bogie b : bogieList) {
-            b.display();
+        for (Map.Entry<String, List<Bogie>> entry : groupedBogies.entrySet()) {
+            System.out.println("\n" + entry.getKey() + " Bogies:");
+
+            for (Bogie b : entry.getValue()) {
+                b.display();
+            }
         }
     }
 }
