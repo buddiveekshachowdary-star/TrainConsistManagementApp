@@ -1,41 +1,39 @@
-import java.util.*;
+import java.util.HashSet;
+import java.util.Scanner;
+import java.util.Set;
 
 public class TrainConsistManagementApp {
 
     public static void main(String[] args) {
 
-        // Step 1: Welcome Message
-        System.out.println("=== Train Consist Management App ===");
+        // Create HashSet to store unique bogie IDs
+        Set<String> bogieSet = new HashSet<>();
 
-        // Step 2: Initialize Passenger Bogie List
-        List<String> passengerBogies = new ArrayList<>();
+        Scanner scanner = new Scanner(System.in);
 
-        // Step 3: Add Bogies (CREATE)
-        passengerBogies.add("Sleeper");
-        passengerBogies.add("AC Chair");
-        passengerBogies.add("First Class");
+        System.out.println("=== Train Consist Management App (UC3) ===");
+        System.out.print("Enter number of bogies to add: ");
+        int n = scanner.nextInt();
+        scanner.nextLine(); // consume newline
 
-        // Step 4: Display Bogies (READ)
-        System.out.println("\nPassenger Bogies after addition:");
-        System.out.println(passengerBogies);
+        // Input bogie IDs
+        for (int i = 0; i < n; i++) {
+            System.out.print("Enter Bogie ID: ");
+            String bogieId = scanner.nextLine();
 
-        // Step 5: Remove a Bogie (DELETE)
-        passengerBogies.remove("AC Chair");
+            boolean added = bogieSet.add(bogieId);
 
-        System.out.println("\nAfter removing AC Chair:");
-        System.out.println(passengerBogies);
-
-        // Step 6: Check Existence (SEARCH)
-        if (passengerBogies.contains("Sleeper")) {
-            System.out.println("\nSleeper bogie exists in the train.");
-        } else {
-            System.out.println("\nSleeper bogie not found.");
+            if (!added) {
+                System.out.println("Duplicate ID detected! Ignored: " + bogieId);
+            }
         }
 
-        // Final State
-        System.out.println("\nFinal Train Consist:");
-        System.out.println(passengerBogies);
+        // Display unique bogie IDs
+        System.out.println("\n=== Unique Bogie IDs in Train ===");
+        for (String id : bogieSet) {
+            System.out.println(id);
+        }
 
-        // Program continues...
+        scanner.close();
     }
 }
