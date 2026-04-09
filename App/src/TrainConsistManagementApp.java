@@ -1,39 +1,32 @@
-import java.util.HashSet;
-import java.util.Scanner;
-import java.util.Set;
+import java.util.LinkedList;
 
 public class TrainConsistManagementApp {
 
     public static void main(String[] args) {
 
-        // Create HashSet to store unique bogie IDs
-        Set<String> bogieSet = new HashSet<>();
+        // Create LinkedList to maintain ordered consist
+        LinkedList<String> trainConsist = new LinkedList<>();
 
-        Scanner scanner = new Scanner(System.in);
+        System.out.println("=== Train Consist Management App (UC4) ===");
 
-        System.out.println("=== Train Consist Management App (UC3) ===");
-        System.out.print("Enter number of bogies to add: ");
-        int n = scanner.nextInt();
-        scanner.nextLine(); // consume newline
+        // Step 1: Add bogies
+        trainConsist.add("Engine");
+        trainConsist.add("Sleeper");
+        trainConsist.add("AC Chair");
+        trainConsist.add("Cargo");
+        trainConsist.add("Guard");
 
-        // Input bogie IDs
-        for (int i = 0; i < n; i++) {
-            System.out.print("Enter Bogie ID: ");
-            String bogieId = scanner.nextLine();
+        // Step 2: Insert Pantry Car at position 2
+        trainConsist.add(2, "Pantry Car");
 
-            boolean added = bogieSet.add(bogieId);
+        // Step 3: Remove first and last bogie
+        trainConsist.removeFirst(); // removes Engine
+        trainConsist.removeLast();  // removes Guard
 
-            if (!added) {
-                System.out.println("Duplicate ID detected! Ignored: " + bogieId);
-            }
+        // Step 4: Display final ordered consist
+        System.out.println("\n=== Final Train Consist ===");
+        for (String bogie : trainConsist) {
+            System.out.println(bogie);
         }
-
-        // Display unique bogie IDs
-        System.out.println("\n=== Unique Bogie IDs in Train ===");
-        for (String id : bogieSet) {
-            System.out.println(id);
-        }
-
-        scanner.close();
     }
 }
