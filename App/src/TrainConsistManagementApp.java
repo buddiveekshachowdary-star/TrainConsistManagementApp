@@ -1,29 +1,45 @@
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+
+// Bogie class (Custom Object)
+class Bogie {
+    String name;
+    int capacity;
+
+    // Constructor
+    Bogie(String name, int capacity) {
+        this.name = name;
+        this.capacity = capacity;
+    }
+
+    // Display method
+    void display() {
+        System.out.println(name + " → Capacity: " + capacity);
+    }
+}
 
 public class TrainConsistManagementApp {
 
     public static void main(String[] args) {
 
-        // Create HashMap to store bogie -> capacity
-        HashMap<String, Integer> bogieCapacityMap = new HashMap<>();
+        System.out.println("=== Train Consist Management App (UC7) ===");
 
-        System.out.println("=== Train Consist Management App (UC6) ===");
+        // Step 1: Create List of Bogie objects
+        List<Bogie> bogieList = new ArrayList<>();
 
-        // Step 1: Add bogie-capacity mapping
-        bogieCapacityMap.put("Sleeper", 72);
-        bogieCapacityMap.put("AC Chair", 54);
-        bogieCapacityMap.put("First Class", 24);
-        bogieCapacityMap.put("Cargo", 100); // load capacity example
+        // Step 2: Add passenger bogies
+        bogieList.add(new Bogie("Sleeper", 72));
+        bogieList.add(new Bogie("AC Chair", 54));
+        bogieList.add(new Bogie("First Class", 24));
 
-        // Step 2: Display bogie capacities
-        System.out.println("\n=== Bogie Capacity Details ===");
+        // Step 3: Sort bogies by capacity (ascending)
+        bogieList.sort(Comparator.comparingInt(b -> b.capacity));
 
-        for (Map.Entry<String, Integer> entry : bogieCapacityMap.entrySet()) {
-            String bogie = entry.getKey();
-            int capacity = entry.getValue();
-
-            System.out.println(bogie + " → Capacity: " + capacity);
+        // Step 4: Display sorted bogies
+        System.out.println("\n=== Bogies Sorted by Capacity (Ascending) ===");
+        for (Bogie b : bogieList) {
+            b.display();
         }
     }
 }
